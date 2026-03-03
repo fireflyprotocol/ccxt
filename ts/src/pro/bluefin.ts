@@ -3,7 +3,7 @@
 
 import bluefinRest from '../bluefin.js';
 import type Client from '../base/ws/Client.js';
-import type { Dict, Int, Market, Num, OHLCV, Order, OrderBook, Position, Str, Strings, Ticker, Tickers, Trade, Balances } from '../base/types.js';
+import type { Dict, Int, OHLCV, Order, OrderBook, Position, Str, Strings, Ticker, Tickers, Trade, Balances } from '../base/types.js';
 
 // ----------------------------------------------------------------------------
 
@@ -133,7 +133,7 @@ export default class bluefin extends bluefinRest {
         // TODO: parse RecentTradesUpdates
         //  - Extract trades array from message.data
         //  - Parse each via this.parseTrade()
-        //  - Append to ArrayCache
+        //  - Append to cache
         //  - Resolve messageHash = 'trades:' + symbol
     }
 
@@ -141,21 +141,21 @@ export default class bluefin extends bluefinRest {
         // TODO: parse CandlestickUpdate
         //  - Extract candle from message.data
         //  - Parse via this.parseOHLCV()
-        //  - Append to ArrayCacheByTimestamp
+        //  - Append to cache
         //  - Resolve messageHash = 'ohlcv:' + timeframe + ':' + symbol
     }
 
     handleOrder (client: Client, message: Dict) {
         // TODO: parse AccountOrderUpdate
         //  - Parse via this.parseOrder()
-        //  - Update ArrayCacheBySymbolById
+        //  - Update cache
         //  - Resolve messageHash = 'orders'
     }
 
     handleMyTrades (client: Client, message: Dict) {
         // TODO: parse AccountTradeUpdate
         //  - Parse via this.parseTrade()
-        //  - Append to ArrayCache
+        //  - Append to cache
         //  - Resolve messageHash = 'myTrades'
     }
 

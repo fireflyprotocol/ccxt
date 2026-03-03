@@ -5,11 +5,9 @@ import Exchange from './abstract/bluefin.js';
 import { Precise } from './base/Precise.js';
 import { TICK_SIZE } from './base/functions/number.js';
 import { ed25519 } from './static_dependencies/noble-curves/ed25519.js';
-import { eddsa } from './base/functions/crypto.js';
-import { eddsaPublicKey } from './base/functions/crypto.js';
-import { blake2b256 } from './base/functions/crypto.js';
+import { eddsa, eddsaPublicKey, blake2b256 } from './base/functions/crypto.js';
 import { ArgumentsRequired, AuthenticationError, OrderNotFound } from './base/errors.js';
-import type { Balances, Dict, FundingRateHistory, Int, LeverageTier, LeverageTiers, Market, Num, OHLCV, Order, OrderBook, OrderSide, OrderType, Position, Str, Strings, Ticker, Tickers, Trade } from './base/types.js';
+import type { Balances, Dict, FundingRateHistory, int, Int, LeverageTier, LeverageTiers, Market, Num, OHLCV, Order, OrderBook, OrderSide, OrderType, Position, Str, Strings, Ticker, Tickers, Trade, Transaction } from './base/types.js';
 
 // ----------------------------------------------------------------------------
 
@@ -161,9 +159,9 @@ export default class bluefin extends Exchange {
         let remaining = data.length;
         let result = this.base16ToBinary ('');
         while (remaining >= 0x80) {
-            const byte = (remaining & 0x7f) | 0x80;
+            const byte = (remaining & 0x7f) | 0x80; // eslint-disable-line no-bitwise
             result = this.binaryConcat (result, this.numberToBE (byte, 1));
-            remaining >>= 7;
+            remaining >>= 7; // eslint-disable-line no-bitwise
         }
         result = this.binaryConcat (result, this.numberToBE (remaining, 1));
         return this.binaryConcat (result, data);
@@ -276,7 +274,7 @@ export default class bluefin extends Exchange {
         const lifetime = this.safeNumber (this.options, 'accessTokenValidForSeconds', 300);
         const nowSeconds = this.milliseconds () / 1000;
         // Refresh at 80% of lifetime (matching SDK)
-        return nowSeconds >= (tokenSetAt + lifetime * 0.8);
+        return nowSeconds >= tokenSetAt + lifetime * 0.8;
     }
 
     isRefreshTokenValid (): boolean {
@@ -288,7 +286,7 @@ export default class bluefin extends Exchange {
         const lifetime = this.safeNumber (this.options, 'refreshTokenValidForSeconds', 2592000);
         const nowSeconds = this.milliseconds () / 1000;
         // 60 second safety buffer
-        return nowSeconds < (tokenSetAt + lifetime - 60);
+        return nowSeconds < tokenSetAt + lifetime - 60;
     }
 
     async getAccessToken (): Promise<string> {
@@ -754,7 +752,7 @@ export default class bluefin extends Exchange {
         return result;
     }
 
-    async setLeverage (leverage: Int, symbol: Str = undefined, params = {}): Promise<any> {
+    async setLeverage (leverage: int, symbol: Str = undefined, params = {}): Promise<{}> {
         if (symbol === undefined) {
             throw new ArgumentsRequired (this.id + ' setLeverage() requires a symbol argument');
         }
@@ -853,7 +851,7 @@ export default class bluefin extends Exchange {
         return await this.tradePutApiV1TradeAdjustIsolatedMargin (this.extend (request, params));
     }
 
-    async withdraw (code: string, amount: number, address: string, tag: Str = undefined, params = {}): Promise<any> {
+    async withdraw (code: string, amount: number, address: string, tag: Str = undefined, params = {}): Promise<Transaction> {
         await this.loadMarkets ();
         await this.getAccessToken ();
         const contractsConfig = this.safeDict (this.options, 'contractsConfig', {});
