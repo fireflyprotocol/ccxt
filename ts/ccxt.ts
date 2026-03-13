@@ -79,6 +79,7 @@ import bittrade from  './src/bittrade.js'
 import bitvavo from  './src/bitvavo.js'
 import blockchaincom from  './src/blockchaincom.js'
 import blofin from  './src/blofin.js'
+import bluefin from  './src/bluefin.js'
 import btcbox from  './src/btcbox.js'
 import btcmarkets from  './src/btcmarkets.js'
 import btcturk from  './src/btcturk.js'
@@ -186,6 +187,7 @@ import bittradePro from  './src/pro/bittrade.js'
 import bitvavoPro from  './src/pro/bitvavo.js'
 import blockchaincomPro from  './src/pro/blockchaincom.js'
 import blofinPro from  './src/pro/blofin.js'
+import bluefinPro from  './src/pro/bluefin.js'
 import bullishPro from  './src/pro/bullish.js'
 import bybitPro from  './src/pro/bybit.js'
 import bydfiPro from  './src/pro/bydfi.js'
@@ -275,6 +277,7 @@ const exchanges = {
     'bitvavo':                bitvavo,
     'blockchaincom':          blockchaincom,
     'blofin':                 blofin,
+    'bluefin':                bluefin,
     'btcbox':                 btcbox,
     'btcmarkets':             btcmarkets,
     'btcturk':                btcturk,
@@ -382,6 +385,7 @@ const pro = {
     'bitvavo':                bitvavoPro,
     'blockchaincom':          blockchaincomPro,
     'blofin':                 blofinPro,
+    'bluefin':                bluefinPro,
     'bullish':                bullishPro,
     'bybit':                  bybitPro,
     'bydfi':                  bydfiPro,
@@ -614,6 +618,7 @@ export {
     bitvavo,
     blockchaincom,
     blofin,
+    bluefin,
     btcbox,
     btcmarkets,
     btcturk,
